@@ -1,3 +1,7 @@
+import math
+from random import random
+
+
 state = [1,...,1]
 t = 0
 
@@ -7,7 +11,7 @@ max_time = 5; #placeholder for now
 k_plus = 5 ; #placeholder for now
 k_minus = 7; #placeholder for now
 
-while t < max_time:
+#while t < max_time:
     #PART 1: two reaction types (join or break)
     #join
         n = len(state)
@@ -20,16 +24,31 @@ while t < max_time:
         a_total = a_join + a_break
 
         if a_total == 0: #no more reactions can occur
-            break
+          #  break
 
     #UNFINISHED!!
     #PART 2: determine time to next reaction
-    '''
-    T = random time
-    r = random number between 0 and 1
 
-    T = -ln(r)/a_total
-    t = t + T
-    '''
+T = -math.log(random.random())/a_total
+
+t = t + T
+    
 
     #PART 3: determine which reaction occurs
+    f = random(0,1) * a_total
+
+if f < a_join:
+        #join reaction occurs
+        #choose two random indices to join
+        i, j = random.sample(range(len(state)), 2)
+        state[i] += state[j]
+        del state[j]
+    else:
+        #break reaction occurs
+        #choose a random index to break
+        i = random.choice(range(len(state)))
+        if state[i] > 2:
+               bonds = state[i] - 1  # number of bonds to break
+               random_bond = random.randint(1, bonds)  # choose a bond to break
+               state[i] -= random_bond  # break the bond
+               state.append(random_bond)  # add the new fragment to the state
